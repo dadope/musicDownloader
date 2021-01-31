@@ -8,6 +8,20 @@ A python-written commandline utility to download, convert and add metadata to yo
 + commandline based
 + fast and with minimal user input
 
+## Installation
+if you have GNU-make installed, use:
+
+
+`make install` 
+
+
+else, use: 
+```
+pip3 install -r requirements.txt
+pip3 install .
+```
+to install the program
+
 ## TODOS
 
 + add automated tests
