@@ -24,11 +24,9 @@ class mp3File:
             self.playlist = selectPlaylist()
 
         elif type(playlist) == str:
-            self.playlist = [x for x in getPlaylists() if x.name == playlist][0]
             try:
-                if not self.playlist.name == playlist:
-                    selectPlaylist()
-            except ValueError:
+                self.playlist = [x for x in getPlaylists() if x.name == playlist][0]
+            except IndexError:
                 selectPlaylist()
         else:
             self.playlist = playlist
@@ -96,7 +94,9 @@ class mp3File:
             self.guessTitle = info_dict["alt_title"]
             self.guessAlbum = info_dict["album"] if None else self.genre
 
-            self.file = ydl.prepare_filename(info_dict)[:-4] + "mp3"
+            # removes filetype returned by youtube-dl as it does not correspond to the actual filetype of the file,
+            # but rather the downloaded audio codec (eg. m4a) before ffmpeg converts it
+            self.file = ydl.prepare_filename(info_dict).rsplit('.', 1)[0] + ".mp3"
             self.currFilename = basename(self.file)
 
             logger.info("Downloaded " + self.file)
